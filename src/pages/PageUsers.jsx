@@ -1,6 +1,31 @@
+import { useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
+import configApi from "../config.api";
 
 const PageUsers = () => {
+  const [users, setUsers] = useState([]);
+  
+  const get = async () => {
+    try {
+      const response = await fetch(`${configApi.BASE_URL}/users`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'x-access-token': localStorage.getItem("token")
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error! status ${response.status}`)
+      }
+
+      const content = await response.json();
+      setUsers(content)
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   return (
     <>
       <Container>
