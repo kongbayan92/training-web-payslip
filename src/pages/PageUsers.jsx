@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
+import WidgetUserAdd from "../components/WidgetUserAdd";
 
 const PageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -31,12 +32,21 @@ const PageUsers = () => {
     return () => {}
   }, [])
 
+  const userAddListener = (e) => {
+    if (e.detail.status) {
+      get();
+    } else {
+      alert(e.detail.error)
+    }
+  }
+
   return (
     <>
       <Container>
         <Row>
-          <Col>
+          <Col className="d-flex justify-content-between align-items-center">
             <h3>Users</h3>
+            <WidgetUserAdd eventListener={userAddListener} />
           </Col>
         </Row>
       </Container>
