@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import UserModel from "../models/UserModel";
+import configApi from "../config.api";
 
 const PageSignin = () => {
   const [user, setUser] = useState(UserModel);
@@ -14,7 +15,7 @@ const PageSignin = () => {
 
   const signin = async () => {
     try {
-      const response = await fetch("http://localhost:3002/api/users/signin", {
+      const response = await fetch(`${configApi.BASE_URL}/users/signin`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
