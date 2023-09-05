@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
 
@@ -26,6 +26,11 @@ const PageUsers = () => {
     }
   }
 
+  useEffect(() => {
+    get();
+    return () => {}
+  }, [])
+
   return (
     <>
       <Container>
@@ -47,6 +52,16 @@ const PageUsers = () => {
                   <th>Action</th>
                 </tr>
               </thead>
+              <tbody>
+                { users.length > 0 && users.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.firstName}</td>
+                    <td>{item.lastName}</td>
+                    <td>{item.email}</td>
+                    <td></td>
+                  </tr>
+                )) }
+              </tbody>
             </Table>
           </Col>
         </Row>
