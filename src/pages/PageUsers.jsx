@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
 import WidgetUserAdd from "../components/WidgetUserAdd";
+import WidgetNavbar from "../components/WidgetNavbar";
 
 const PageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -42,7 +43,8 @@ const PageUsers = () => {
 
   return (
     <>
-      <Container>
+      <WidgetNavbar />
+      <Container className="mt-4">
         <Row>
           <Col className="d-flex justify-content-between align-items-center">
             <h3>Users</h3>

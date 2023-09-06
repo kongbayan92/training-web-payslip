@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import UserModel from "../models/UserModel";
 import configApi from "../config.api";
+import { useNavigate } from "react-router-dom";
 
 const PageSignin = () => {
+  let navigate = useNavigate()
   const [user, setUser] = useState(UserModel);
 
   const handleInput = (e) => {
@@ -30,6 +32,7 @@ const PageSignin = () => {
 
       const content = await response.json();
       localStorage.setItem("token", content.token)
+      return navigate("/users")
     } catch (error) {
       alert(error);
     }

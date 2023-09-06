@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import configApi from '../config.api';
+import UserModel from '../models/UserModel';
 
 const WidgetUserAdd = ({ eventListener }) => {
   const [show, setShow] = useState(false);
@@ -10,12 +11,7 @@ const WidgetUserAdd = ({ eventListener }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: ""
-  })
+  const [user, setUser] = useState(UserModel)
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -38,10 +34,11 @@ const WidgetUserAdd = ({ eventListener }) => {
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
-
-      let content = await response.json();
-      eventListener({detail: { status: true, content }})
       handleClose()
+      let content = await response.json();
+      setUser(UserModel)
+      eventListener({detail: { status: true, content }})
+      
     } catch (error) {
       eventListener({detail: { status: false, error }})
     }
