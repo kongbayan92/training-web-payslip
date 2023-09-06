@@ -5,7 +5,7 @@ import UserModel from '../models/UserModel';
 import configApi from '../config.api';
 import { Form } from 'react-bootstrap';
 
-const WidgetUserDetail = ({ userId }) => {
+const WidgetUserDetail = ({ eventListener, userId }) => {
   const [user, setUser] = useState(UserModel)
 
   const [show, setShow] = useState(false);
@@ -33,6 +33,30 @@ const WidgetUserDetail = ({ userId }) => {
       
     } catch (error) {
       // eventListener({detail: { status: false, error }})
+    }
+  }
+
+  const update = async () => {
+    try {
+      const response = await fetch(`${configApi.BASE_URL}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem("token")
+        },
+        body: JSON.stringify(user)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      handleClose()
+      let content = await response.json();
+      setUser(UserModel)
+      eventListener({detail: { status: true, content }})
+    } catch (error) {
+      eventListener({detail: { status: false, error }})
     }
   }
 
@@ -70,7 +94,7 @@ const WidgetUserDetail = ({ userId }) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={update}>
               Save Changes
             </Button>
           </Modal.Footer>

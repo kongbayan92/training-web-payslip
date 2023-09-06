@@ -42,6 +42,14 @@ const PageUsers = () => {
     }
   }
 
+  const userUpdateListener = (e) => {
+    if (e.detail.status) {
+      get();
+    } else {
+      alert(e.detail.error)
+    }
+  }
+
   return (
     <>
       <WidgetNavbar />
@@ -72,7 +80,7 @@ const PageUsers = () => {
                     <td>{item.lastName}</td>
                     <td>{item.email}</td>
                     <td>
-                      <WidgetUserDetail userId={item._id} />
+                      <WidgetUserDetail userId={item._id} eventListener={userUpdateListener} />
                     </td>
                   </tr>
                 )) }
