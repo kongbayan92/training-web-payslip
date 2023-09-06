@@ -72,7 +72,7 @@ const PageUsers = () => {
                     <td>{item.lastName}</td>
                     <td>{item.email}</td>
                     <td>
-                      <WidgetUserDetail user={item} />
+                      <WidgetUserDetail userId={item._id} />
                     </td>
                   </tr>
                 )) }
