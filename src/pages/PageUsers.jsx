@@ -3,6 +3,7 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
 import WidgetUserAdd from "../components/WidgetUserAdd";
 import WidgetNavbar from "../components/WidgetNavbar";
+import WidgetUserDetail from "../components/WidgetUserDetail";
 
 const PageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -70,7 +71,9 @@ const PageUsers = () => {
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
                     <td>{item.email}</td>
-                    <td></td>
+                    <td>
+                      <WidgetUserDetail user={item} />
+                    </td>
                   </tr>
                 )) }
               </tbody>
