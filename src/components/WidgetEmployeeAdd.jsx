@@ -3,6 +3,7 @@ import { Button, Col, Form, InputGroup, Modal, Row, Table } from "react-bootstra
 import EmployeeModel from "../models/EmployeeModel";
 import AllowanceModel from "../models/AllowanceModel";
 import DeductionModel from "../models/DeductionModel";
+import { FaTrash } from "react-icons/fa6";
 
 const WidgetEmployeeAdd = () => {
   const [show, setShow] = useState(false);
@@ -62,6 +63,22 @@ const WidgetEmployeeAdd = () => {
     }
   }
 
+  const removeAllowance = (index) => {
+    setEmployee((employee) => {
+      let currentData = {...employee};
+      currentData.allowances.splice(index, 1)
+      return currentData;
+    })
+  }
+
+  const removeDeduction = (index) => {
+    setEmployee((employee) => {
+      let currentData = {...employee};
+      currentData.deductions.splice(index, 1)
+      return currentData;
+    })
+  }
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -101,7 +118,7 @@ const WidgetEmployeeAdd = () => {
                 <Form.Label>Allowance</Form.Label>
                 <InputGroup className="mb-3">
                   <Form.Control placeholder="Name" type="text" name="name" value={allowance.name} onChange={(e) => handleAllowanceAndDeduction(e, true)}/>
-                  <Form.Control placeholder="Total" type="number" name="total" value={allowance.total} onChange={(e) => handleAllowanceAndDeduction(e, true)}/>
+                  <Form.Control placeholder="Total" type="number" name="total" value={allowance.total || 0} onChange={(e) => handleAllowanceAndDeduction(e, true)}/>
                   <Button onClick={addAllowance} variant="secondary" size="sm">Add</Button>
                 </InputGroup>
               </Form.Group>
@@ -111,6 +128,7 @@ const WidgetEmployeeAdd = () => {
                     <tr>
                       <th>Allowance</th>
                       <th>Total</th>
+                      <th>#</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,17 +136,21 @@ const WidgetEmployeeAdd = () => {
                       <tr key={index}>
                         <td>{value.name}</td>
                         <td>{value.total}</td>
+                        <td>
+                          <Button size="sm" variant="secondary" onClick={() => removeAllowance(index)}>
+                            <FaTrash />
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
               )}
-
               <Form.Group className="mb-3">
                 <Form.Label>Deduction</Form.Label>
                 <InputGroup className="mb-3">
                   <Form.Control placeholder="Name" type="text" name="name" value={deduction.name} onChange={(e) => handleAllowanceAndDeduction(e)}/>
-                  <Form.Control placeholder="Total" type="number" name="total" value={deduction.total} onChange={(e) => handleAllowanceAndDeduction(e)}/>
+                  <Form.Control placeholder="Total" type="number" name="total" value={deduction.total || 0} onChange={(e) => handleAllowanceAndDeduction(e)}/>
                   <Button onClick={addDeduction} variant="secondary" size="sm">Add</Button>
                 </InputGroup>
               </Form.Group>
@@ -138,6 +160,7 @@ const WidgetEmployeeAdd = () => {
                     <tr>
                       <th>deduction</th>
                       <th>Total</th>
+                      <th>#</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -145,6 +168,11 @@ const WidgetEmployeeAdd = () => {
                       <tr key={index}>
                         <td>{value.name}</td>
                         <td>{value.total}</td>
+                        <td>
+                          <Button size="sm" variant="secondary" onClick={() => removeDeduction(index)}>
+                            <FaTrash />
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
