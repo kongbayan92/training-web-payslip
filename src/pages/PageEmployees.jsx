@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import WidgetNavbar from "../components/WidgetNavbar";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
+import WidgetEmployeeAdd from "../components/WidgetEmployeeAdd";
 
 const PageEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -55,7 +56,7 @@ const PageEmployees = () => {
         <Row>
           <Col className="d-flex justify-content-between align-items-center">
             <h3>Employees</h3>
-       
+            <WidgetEmployeeAdd />
           </Col>
         </Row>
       </Container>
