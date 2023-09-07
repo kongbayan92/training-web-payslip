@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
 import EmployeeModel from "../models/EmployeeModel";
+import AllowanceModel from "../models/AllowanceModel";
+import DeductionModel from "../models/DeductionModel";
 
 const WidgetEmployeeAdd = () => {
   const [show, setShow] = useState(false);
@@ -8,7 +10,9 @@ const WidgetEmployeeAdd = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [employee, setEmployees] = useState(EmployeeModel);
+  const [employee, setEmployee] = useState(EmployeeModel);
+  const [allowance, setAllowance] = useState(AllowanceModel);
+  const [deduction, setDeduction] = useState(DeductionModel);
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -18,8 +22,34 @@ const WidgetEmployeeAdd = () => {
     if (type === 'number') {
       value = parseInt(value);
     }
-    
-    setEmployees((values) => ({...values, [name]: value}))
+
+    setEmployee((values) => ({...values, [name]: value}))
+  }
+
+  const handleAllowanceAndDeduction = (e, isAllowance) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    let type = e.target.type;
+
+    if (type === 'number') {
+      value = parseInt(value);
+    }
+
+    if (isAllowance) {
+      setAllowance((values) => ({...values, [name]: value}))
+    } else {
+      setDeduction((values) => ({...values, [name]: value}))
+    }
+  }
+
+  const addAllowance = () => {
+    if (allowance.name && allowance.total) {
+      setEmployee((values) => {
+        let currentData = {...values}
+        currentData.allowances.push(allowance);
+        return currentData
+      })
+    }
   }
 
   return (
@@ -55,6 +85,19 @@ const WidgetEmployeeAdd = () => {
                 <Form.Label>Basic Salary</Form.Label>
                 <Form.Control type="number" name="basicSalary" value={employee.basicSalary} onChange={handleInput} />
               </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>Allowance</Form.Label>
+                <InputGroup className="mb-3">
+                  <Form.Control placeholder="Name" type="text" name="name" value={allowance.name} onChange={(e) => handleAllowanceAndDeduction(e, true)}/>
+                  <Form.Control placeholder="Total" type="number" name="total" value={allowance.total} onChange={(e) => handleAllowanceAndDeduction(e, true)}/>
+                  <Button onClick={addAllowance} variant="secondary" size="sm">Add</Button>
+                </InputGroup>
+              </Form.Group>
+              <p>
+                {JSON.stringify(employee)}
+              </p>
             </Col>
           </Row>
         </Modal.Body>
