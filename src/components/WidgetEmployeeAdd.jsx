@@ -52,6 +52,16 @@ const WidgetEmployeeAdd = () => {
     }
   }
 
+  const addDeduction = () => {
+    if (deduction.name && deduction.total) {
+      setEmployee((values) => {
+        let currentData = {...values}
+        currentData.deductions.push(deduction);
+        return currentData
+      })
+    }
+  }
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -105,6 +115,33 @@ const WidgetEmployeeAdd = () => {
                   </thead>
                   <tbody>
                     {employee.allowances.map((value, index) => (
+                      <tr key={index}>
+                        <td>{value.name}</td>
+                        <td>{value.total}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+
+              <Form.Group className="mb-3">
+                <Form.Label>Deduction</Form.Label>
+                <InputGroup className="mb-3">
+                  <Form.Control placeholder="Name" type="text" name="name" value={deduction.name} onChange={(e) => handleAllowanceAndDeduction(e)}/>
+                  <Form.Control placeholder="Total" type="number" name="total" value={deduction.total} onChange={(e) => handleAllowanceAndDeduction(e)}/>
+                  <Button onClick={addDeduction} variant="secondary" size="sm">Add</Button>
+                </InputGroup>
+              </Form.Group>
+              {employee.deductions.length > 0 && (
+                <Table bordered hover striped>
+                  <thead>
+                    <tr>
+                      <th>deduction</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employee.deductions.map((value, index) => (
                       <tr key={index}>
                         <td>{value.name}</td>
                         <td>{value.total}</td>
