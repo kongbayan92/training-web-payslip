@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Modal, Row, Table } from "react-bootstrap";
 import EmployeeModel from "../models/EmployeeModel";
 import AllowanceModel from "../models/AllowanceModel";
 import DeductionModel from "../models/DeductionModel";
@@ -95,9 +95,24 @@ const WidgetEmployeeAdd = () => {
                   <Button onClick={addAllowance} variant="secondary" size="sm">Add</Button>
                 </InputGroup>
               </Form.Group>
-              <p>
-                {JSON.stringify(employee)}
-              </p>
+              {employee.allowances.length > 0 && (
+                <Table bordered hover striped>
+                  <thead>
+                    <tr>
+                      <th>Allowance</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employee.allowances.map((value, index) => (
+                      <tr key={index}>
+                        <td>{value.name}</td>
+                        <td>{value.total}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Row>
         </Modal.Body>
