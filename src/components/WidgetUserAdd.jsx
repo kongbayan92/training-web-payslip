@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import configApi from '../config.api';
-import UserModel from '../models/UserModel';
+import { AiFillEdit } from 'react-icons/ai'
 
 const WidgetUserAdd = ({ eventListener }) => {
   const [show, setShow] = useState(false);
@@ -11,7 +11,12 @@ const WidgetUserAdd = ({ eventListener }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [user, setUser] = useState(UserModel)
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: ""
+  })
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -36,7 +41,6 @@ const WidgetUserAdd = ({ eventListener }) => {
       }
       handleClose()
       let content = await response.json();
-      setUser(UserModel)
       eventListener({detail: { status: true, content }})
       
     } catch (error) {
@@ -47,7 +51,7 @@ const WidgetUserAdd = ({ eventListener }) => {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        New User
+        <AiFillEdit /> New User
       </Button>
 
       <Modal show={show} onHide={handleClose}>

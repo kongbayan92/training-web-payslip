@@ -3,7 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import UserModel from '../models/UserModel';
 import configApi from '../config.api';
-import { Form } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
+import { FaMagnifyingGlass } from 'react-icons/fa6'
+import { CgRename } from 'react-icons/cg'
+import { AiOutlineCloseCircle, AiOutlineMail, AiOutlineSave, AiOutlineUser } from 'react-icons/ai';
 
 const WidgetUserDetail = ({ eventListener, userId }) => {
   const [user, setUser] = useState(UserModel)
@@ -69,33 +72,50 @@ const WidgetUserDetail = ({ eventListener, userId }) => {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Detail
+        <FaMagnifyingGlass /> Detail
       </Button>
       {user && (
         <Modal show={show} onHide={handleClose} onShow={get}>
           <Modal.Header closeButton>
-            <Modal.Title>{user.email}</Modal.Title>
+            <Modal.Title><AiOutlineUser />  {user.email}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <Form.Group className='mb-3'>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type='email' name='email' value={user.email} onChange={handleInput}/>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">
+                <AiOutlineMail />
+              </InputGroup.Text>
+              <Form.Control type='email' name='email' value={user.email} onChange={handleInput}/>
+            </InputGroup>
           </Form.Group>
+
           <Form.Group className='mb-3'>
             <Form.Label>First Name</Form.Label>
-            <Form.Control type='text' name='firstName' value={user.firstName} onChange={handleInput}/>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">
+                <CgRename />
+              </InputGroup.Text>
+              <Form.Control type='text' name='firstName' value={user.firstName} onChange={handleInput}/>
+            </InputGroup>
           </Form.Group>
+
           <Form.Group className='mb-3'>
             <Form.Label>Last Name</Form.Label>
-            <Form.Control type='text' name='lastName' value={user.lastName} onChange={handleInput}/>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">
+                <CgRename />
+              </InputGroup.Text>
+              <Form.Control type='text' name='lastName' value={user.lastName} onChange={handleInput}/>
+            </InputGroup>
           </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Close
+              <AiOutlineCloseCircle /> Close
             </Button>
             <Button variant="primary" onClick={update}>
-              Save Changes
+              <AiOutlineSave /> Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
