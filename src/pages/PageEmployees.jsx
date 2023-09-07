@@ -33,13 +33,13 @@ const PageEmployees = () => {
     return () => {}
   }, []);
 
-  // const employeeAddListener = (e) => {
-  //   if (e.detail.status) {
-  //     get();
-  //   } else {
-  //     alert(e.detail.error)
-  //   }
-  // }
+  const employeeAddListener = (e) => {
+    if (e.detail.status) {
+      get();
+    } else {
+      alert(e.detail.error)
+    }
+  }
 
   // const employeeDetailListener = (e) => {
   //   if (e.detail.status) {
@@ -56,7 +56,7 @@ const PageEmployees = () => {
         <Row>
           <Col className="d-flex justify-content-between align-items-center">
             <h3>Employees</h3>
-            <WidgetEmployeeAdd />
+            <WidgetEmployeeAdd eventListener={employeeAddListener} />
           </Col>
         </Row>
       </Container>

@@ -4,8 +4,9 @@ import EmployeeModel from "../models/EmployeeModel";
 import AllowanceModel from "../models/AllowanceModel";
 import DeductionModel from "../models/DeductionModel";
 import { FaTrash } from "react-icons/fa6";
+import configApi from "../config.api";
 
-const WidgetEmployeeAdd = () => {
+const WidgetEmployeeAdd = ({eventListener}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -77,6 +78,31 @@ const WidgetEmployeeAdd = () => {
       currentData.deductions.splice(index, 1)
       return currentData;
     })
+  }
+
+
+  const create = async () => {
+    try {
+      const response = await fetch(`${configApi.BASE_URL}/employee`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem("token")
+        },
+        body: JSON.stringify(employee)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      handleClose()
+      let content = await response.json();
+      eventListener({detail: { status: true, content }})
+      
+    } catch (error) {
+      eventListener({detail: { status: false, error }})
+    }
   }
 
   return (
@@ -181,6 +207,14 @@ const WidgetEmployeeAdd = () => {
             </Col>
           </Row>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={create}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   )
