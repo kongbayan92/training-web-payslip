@@ -6,7 +6,7 @@ import DeductionModel from "../models/DeductionModel";
 import { FaTrash } from "react-icons/fa6";
 import configApi from "../config.api";
 
-const WidgetEmployeeAdd = ({eventListener}) => {
+const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -114,13 +114,36 @@ const WidgetEmployeeAdd = ({eventListener}) => {
     }
   }
 
+  const get = async () => {
+    try {
+      const response = await fetch(`${configApi.BASE_URL}/employee/${employeeId}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem("token")
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      
+      let content = await response.json();
+      setEmployee(content);
+      eventListener({detail: { status: true, content }})
+    } catch (error) {
+      eventListener({detail: { status: false, error }})
+    }
+  }
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Add Employee
+        Detail
       </Button>
 
-      <Modal show={show} onHide={handleClose} size="lg" backdrop="static" keyboard={false}>
+      <Modal show={show} onHide={handleClose} onShow={get} size="lg" backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>New Employee</Modal.Title>
         </Modal.Header>
@@ -229,4 +252,4 @@ const WidgetEmployeeAdd = ({eventListener}) => {
   )
 }
 
-export default WidgetEmployeeAdd;
+export default WidgetEmployeeDetail;
