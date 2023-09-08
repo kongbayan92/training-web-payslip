@@ -80,7 +80,6 @@ const WidgetEmployeeAdd = ({eventListener}) => {
     })
   }
 
-
   const create = async () => {
     try {
       const response = await fetch(`${configApi.BASE_URL}/employee`, {
@@ -96,10 +95,16 @@ const WidgetEmployeeAdd = ({eventListener}) => {
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
+
       handleClose()
       let content = await response.json();
+      setEmployee(() => {
+        let currentData = {...EmployeeModel};
+        currentData.deductions = []
+        currentData.allowances = []
+        return currentData;
+      })
       eventListener({detail: { status: true, content }})
-      
     } catch (error) {
       eventListener({detail: { status: false, error }})
     }
