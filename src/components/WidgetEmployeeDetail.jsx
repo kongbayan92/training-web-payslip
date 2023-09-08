@@ -89,10 +89,10 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
     })
   }
 
-  const create = async () => {
+  const update = async () => {
     try {
-      const response = await fetch(`${configApi.BASE_URL}/employee`, {
-        method: 'POST',
+      const response = await fetch(`${configApi.BASE_URL}/employee/${employeeId}`, {
+        method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
-      
+
       let content = await response.json();
       setEmployee(content);
       eventListener({detail: { status: true, content }})
@@ -136,6 +136,8 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
       eventListener({detail: { status: false, error }})
     }
   }
+
+
 
   return (
     <>
@@ -145,7 +147,7 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
 
       <Modal show={show} onHide={handleClose} onShow={get} size="lg" backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
-          <Modal.Title>New Employee</Modal.Title>
+          <Modal.Title>{employee.email}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row>
@@ -243,7 +245,7 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={create}>
+          <Button variant="primary" onClick={update}>
             Save Changes
           </Button>
         </Modal.Footer>
