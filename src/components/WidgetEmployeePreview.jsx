@@ -62,6 +62,46 @@ const WidgetEmployeePreview = ({employeeId, eventListener}) => {
           </Table>
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <Table striped hover bordered>
+            <caption style={{captionSide: "top"}}>Allowances</caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employee.allowances && employee.allowances.map((allowance, index) => (
+                <tr key={index}>
+                  <td>{allowance.name}</td>
+                  <td><WidgetCommonIDR value={allowance.total}/></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+        <Col>
+        <Table striped hover bordered>
+            <caption style={{captionSide: "top"}}>Deductions</caption>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employee.deductions && employee.deductions.map((deduction, index) => (
+                <tr key={index}>
+                  <td>{deduction.name}</td>
+                  <td><WidgetCommonIDR value={deduction.total}/></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     </>
   )
 }
