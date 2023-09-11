@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Col, Modal, Row, Table } from "react-bootstrap";
 import configApi from "../config.api";
 import SalaryModel from "../models/SalaryModel";
+import WidgetEmployeePreview from "./WidgetEmployeePreview";
 
 const WidgetSalaryDetail = ({salaryId}) => {
   const [show, setShow] = useState(false);
@@ -33,8 +34,6 @@ const WidgetSalaryDetail = ({salaryId}) => {
     }
   }
 
-  
-
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -46,6 +45,7 @@ const WidgetSalaryDetail = ({salaryId}) => {
           <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <WidgetEmployeePreview employeeId={salary.employeeId} eventListener={() => {}} />
           <Row>
             <Col>
               <Table striped bordered hover>
