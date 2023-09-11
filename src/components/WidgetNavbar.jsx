@@ -13,7 +13,7 @@ function WidgetNavbar() {
           <Nav className="me-auto">
             <NavDropdown title="Master" id="basic-nav-dropdown">
               <NavDropdown.Item href="/users">Users</NavDropdown.Item>
-              <NavDropdown.Item href="/employees">
+              <NavDropdown.Item href="#action/3.2">
                 Employee
               </NavDropdown.Item>
             </NavDropdown>

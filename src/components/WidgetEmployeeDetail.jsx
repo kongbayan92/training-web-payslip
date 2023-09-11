@@ -137,8 +137,6 @@ const WidgetEmployeeDetail = ({eventListener, employeeId}) => {
     }
   }
 
-
-
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
