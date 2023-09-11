@@ -38,7 +38,7 @@ const PageEmployees = () => {
     if (e.detail.status) {
       get();
     } else {
-      alert(e.detail.error)
+      
     }
   }
 
@@ -46,7 +46,7 @@ const PageEmployees = () => {
     if (e.detail.status) {
       get();
     } else {
-      alert(e.detail.error);
+      
     }
   }
 

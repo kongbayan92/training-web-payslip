@@ -5,6 +5,7 @@ import AllowanceModel from "../models/AllowanceModel";
 import DeductionModel from "../models/DeductionModel";
 import { FaTrash } from "react-icons/fa6";
 import configApi from "../config.api";
+import Swal from "sweetalert2";
 
 const WidgetEmployeeAdd = ({eventListener}) => {
   const [show, setShow] = useState(false);
@@ -107,9 +108,19 @@ const WidgetEmployeeAdd = ({eventListener}) => {
 
       handleClose()
       let content = await response.json();
+      Swal.fire(
+        'Good job!',
+        'Adding new employee successfully!',
+        'success'
+      )
       resetEmployee()
       eventListener({detail: { status: true, content }})
     } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error
+      })
       eventListener({detail: { status: false, error }})
     }
   }
