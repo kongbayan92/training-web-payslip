@@ -4,6 +4,7 @@ import WidgetNavbar from "../components/WidgetNavbar";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import WidgetCommonHumanDate from "../components/WidgetCommonHumanDate";
 import WidgetCommonIDR from "../components/WidgetCommonIDR";
+import WidgetSalaryDetail from "../components/WidgetSalaryDetail";
 
 const PageSalaries = () => {
   const [salaries, setSalaries] = useState([]);
@@ -70,7 +71,7 @@ const PageSalaries = () => {
                     <td><WidgetCommonIDR value={salary.totalDeduction} /></td>
                     <td><WidgetCommonIDR value={salary.totalSalary} /></td>
                     <td>
-                      
+                      <WidgetSalaryDetail salaryId={salary._id} />
                     </td>
                   </tr>
                 ))}
